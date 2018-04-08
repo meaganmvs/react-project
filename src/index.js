@@ -1,6 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import styled from 'styled-components';
+
+const Button = styled.button`
+  border-radius: 3px;
+  padding: 0.25em 1em;
+  margin: 0 1em;
+  background: transparent;
+  color: palevioletred;
+  border: 2px solid palevioletred;
+  font-size: 20px;
+  cursor: pointer;
+`;
 
 function Square(props) {
     return (
@@ -120,10 +132,31 @@ class Game extends React.Component {
   }
 }
 
+class App extends React.Component {
+    getWeather() {
+        fetch('https://api.darksky.net/forecast/0fbca1a75564333d63ed4dc25d26c274/40.7831,73.9712').then((result) => {
+            return result.json();
+        }).then((jsonResult) => {
+            console.log(jsonResult);
+        })
+    }
+    
+    render() {
+        return (
+            <div>
+                <p>what is the weather in nyc right now?</p>
+                <i className="fas fa-sun"></i>
+                <Button onClick={() => this.getWeather()}>FIND OUT</Button>
+            </div>
+           
+        )
+    }
+}
+
 // ========================================
 
 ReactDOM.render(
-  <Game />,
+  <App />,
   document.getElementById('root')
 );
 
